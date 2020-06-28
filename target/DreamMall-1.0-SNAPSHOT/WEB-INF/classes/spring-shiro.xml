@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--配置securityManager-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!--自定义realm-->
+        <property name="realm" ref="userRealm"/>
+    </bean>
+    <!--配置凭证匹配器-->
+    <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <!-- 加密的方式 -->
+        <constructor-arg index="0" type="java.lang.String" value="MD5" />
+        <!-- 加密的次数，默认是1次 -->
+        <property name="hashIterations" value="2"/>
+    </bean>
+    <!--配置自定义realm-->
+    <bean id="userRealm" class="com.hanson.config.UserRealm">
+        <property name="credentialsMatcher" ref="credentialsMatcher"/>
+    </bean>
+    <!--配置自定义系统退出过滤器-->
+    <bean id="logoutFilter" class="com.hanson.config.DMSystemLogoutFilter">
+        <!--登出后重定向至登陆页面-->
+        <property name="redirectUrl" value="/login"/>
+    </bean>
+    <!--ajax请求拦截-->
+    <bean id="shiroPermsFilter" class="com.hanson.config.ShiroPermsFilter"/>
+    <!--配置过滤器-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/login"/>
+        <property name="successUrl" value="/home.jsp"/><!--这个配置似乎没用，登陆直接由controller转发了-->
+        <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
+        <!--注入自定义退出登陆过滤器-->
+        <property name="filters">
+            <map>
+                <entry key="logout" value-ref="logoutFilter"/>
+                <!--请求拦截器，用户异步请求鉴权-->
+                <entry key="perms" value-ref="shiroPermsFilter"/>
+            </map>
+        </property>
+        <property name="filterChainDefinitions">
+            <value>
+                /css/**=anon
+                /js/**=anon
+                /images/**=anon
+                /font/**=anon
+                /font/iconic/**=anon
+                /login=anon
+                /logout=logout
+                /toHome=authc
+                /home=authc
+
+                <!--商品管理-->
+                /product/goods/toAdd=perms[product:goods:toAdd]
+                /product/goods/delete=perms[product:goods:delete]
+                /product/goods/list=perms[product:goods:list]
+                /product/goods/add/form/**=perms[product:goods:add:form]
+                /product/goods/category/**=perms[product:goods:category]
+                /product/goods/toList=perms[product:goods:toList]
+                /product/goods/delete1=perms[product:goods:delete1]
+                /product/goods/toEdit/**=perms[product:goods:toEdit]
+                /product/goods/edit=perms[product:goods:edit]
+                /product/goods/release=perms[product:goods:release]
+                /product/goods/off=perms[product:goods:off]
+                /product/goods/examine=perms[product:goods:examine]
+                /product/goods/search=perms[product:goods:search]
+                <!--分类管理-->
+                /category/toList=perms[category:toList]
+                /category/list=perms[category:list]
+                /category/delete=perms[category:delete]
+                /category/increase=perms[category:increase]
+                /category/query=perms[category:query]
+                /category/update=perms[category:update]
+                <!--订单管理-->
+                /order/toList=perms[order:toList]
+                /order/list=perms[order:list]
+                /order/transfer=perms[order:transfer]
+                /order/query=perms[order:query]
+                /order/update=perms[order:update]
+                /order/logistics/info=perms[order:logistics:info]
+                /order/deliver=perms[order:deliver]
+                /order/toTrash=perms[order:toTrash]
+                /order/trash=perms[order:trash]
+                /order/delete=perms[order:delete]
+                /order/recovery=perms[order:recovery]
+                /order/deletes=perms[order:deletes]
+                /order/recoveries=perms[order:recoveries]
+                /order/add/logistics=perms[order:add:logistics]
+                /order/toPrint/**=perms[order:toPrint]
+                /order/print/details=perms[order:print:details]
+                <!--权限管理-->
+                /authority/toList=perms[authority:toList]
+                /authority/list=perms[authority:list]
+                /authority/increase=perms[authority:increase]
+                /authority/query=perms[authority:query]
+                /authority/update=perms[authority:update]
+                /authority/delete=perms[authority:delete]
+                <!--用户管理-->
+                /member/toList=perms[member:toList]
+                /member/list=perms[member:list]
+                /member/transfer=perms[member:transfer]
+                /member/toTrash=perms[member:toTrash]
+                /member/trash=perms[member:trash]
+                /member/delete=perms[member:delete]
+                /member/deletes=perms[member:deletes]
+                /member/recoveries=perms[member:recoveries]
+                /member/ons=perms[member:ons]
+                /member/offs=perms[member:offs]
+                /member/recycles=perms[member:recycles]
+                <!--管理员管理-->
+                /sys/user/toList=perms[sys:user:toList]
+                /sys/user/list=perms[sys:user:list]
+                /sys/user/query=perms[sys:user:query]
+                /sys/user/update=perms[sys:user:update]
+                /sys/user/delete=perms[sys:user:delete]
+                /sys/user/increase=perms[sys:user:increase]
+                /sys/user/authority=perms[sys:user:authority]
+                /sys/user/permission=perms[sys:user:permission]
+                /sys/user/revoke/perm=perms[sys:user:revoke:perm]
+                /system/info=anon
+                /init/start=perms[init:start]
+                /**=authc<!--用于拦截tomcat启动页并跳转登陆页，登陆成功由controller转发到系统首页-->
+            </value>
+        </property>
+    </bean>
+</beans>

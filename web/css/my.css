@@ -1,0 +1,109 @@
+/*首页的css样式控制文件*/
+
+/*整体*/
+*{
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+}
+span{
+    display: inline-block;
+    line-height: 50px;
+}
+
+/*顶部导航栏*/
+.navbar{
+    height: 50px;
+    font-size: 20px;
+    background: dodgerblue;
+    display: block;
+}
+.dropdown .dropdown-toggle{
+    color: white;
+}
+
+/*左侧栏*/
+.aside{
+    position: absolute;
+    width: 200px;
+    height: auto;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    padding-top: 10px;
+    z-index: 99;
+    overflow: auto;
+    background-color: rgb(238,238,238);
+    /*background-color: rgb(238,238,238);*/
+}
+.panel .menu-items, .panel .panel-collapse .items {
+    text-decoration: none;
+    /*padding-left: 25px;*/
+    color: #333;
+}
+.panel .menu-items{
+    font-weight: 500;
+}
+.panel .menu-items .glyphicon{
+    float: right;
+    font-size: 15px;
+}
+.panel >dd >ul{
+    list-style: none;
+}
+.panel >dd >ul >li >a{
+    font-size: 15px;
+}
+.items ,dt ,dd{
+    color: #333;
+}
+dt{
+    margin-left: 25px;
+}
+dt span{
+    font-size: 15px;
+}
+dt a{
+    font-size: 15px;
+}
+dd{
+    margin-left: 45px;
+}
+
+/*右侧内容展示栏*/
+.section{
+    position: absolute;
+    right: 0;
+    left: 200px;
+    top: 50px;
+    bottom: 0;
+    overflow: hidden;
+    z-index: 1;
+    background-color: lightgoldenrodyellow;
+    display: block;
+}
+.context-box{
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 50px;
+    z-index: 1;
+    overflow: scroll;
+}
+.form-inline{
+    float: right;
+}
+.error-msg{
+    color: red;
+    font-weight: bold;
+}
+.footer{
+    margin-bottom: 0;
+    width: 100%;height: 50px;
+    text-align: center;
+}
+.home-container{
+    width: 100%;
+    height: 660px;
+}

@@ -1,0 +1,82 @@
+/*本文件是页面编辑部分内容的css样式文件，被多个页面引用*/
+
+/*添加分类start*/
+.edit-list{
+    list-style: none;
+}
+.edit-list li{
+    padding-top: 10px;
+}
+.edit-list >li >input{
+    border-radius: 3px;
+    outline: none;
+    border: 1px solid darkgray;
+    padding: 5px 5px;
+    height: 30px;
+    font-size: 16px;
+    width: 280px;
+    background-color: lightgoldenrodyellow;
+}
+.edit-list >li > div >input{
+    border-radius: 5px;
+    outline: none;
+    border: 0 solid;
+}
+#category-table >tr >td{
+    height: 50px;
+}
+#rule-tips{
+    word-break: break-word;
+    line-height: 25px;
+    font-size: 16px
+}
+#put-btn , #edit-btn , #perm-btn, #add-btn{
+    float: right;
+    height: 30px;
+    width: 50px;
+    background-color: lightgoldenrodyellow;
+}
+#result-details{
+    line-height: 25px;
+    font-size: 16px
+}
+.help-block{
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 12px;
+    color: #999999;
+    margin-top: unset;
+    margin-bottom: unset;
+}
+#reset-btn ,#revoke-btn{
+    float: right;
+    height: 30px;
+    width: 50px;
+    margin-left: 15px;
+    background-color: lightgoldenrodyellow;
+}
+/*添加分类end*/
+
+/*添加权限start*/
+label{
+    width: 150px;
+    text-align: right;
+    margin-right: 20px;
+    font-weight: unset;
+    font-size: 16px;
+    line-height: 20px;
+}
+#help-tips , #rule-tips , #permission-choice{
+    font-size: 12px;
+    word-wrap: break-word;
+    line-height: 20px;
+    margin-left: 170px;
+    width: 280px;
+}
+.input-xlarge{
+    margin-left: 170px;
+    width: 280px;
+    height: 115px;
+    background-color: lightgoldenrodyellow;
+}
+/*添加权限end*/

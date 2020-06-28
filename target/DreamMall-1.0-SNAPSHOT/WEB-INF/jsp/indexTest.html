@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Bootstrap 版本2.0 垂直表单布局实例</title>
+    <link href="/css/addProduct.css" rel="stylesheet">
+    <style>
+        body{
+            margin: 0;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            line-height: 18px;
+            color: #333333;
+            font-size: 20px;
+        }
+        div{
+            display: block;
+        }
+        form{
+            margin: 0 0 18px;
+            display: block;
+        }
+        fieldset{
+            display: block;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            margin-inline-start: 2px;
+            margin-inline-end: 2px;
+        }
+        legend {
+            display: block;
+            width: 100%;
+            padding: 0;
+            margin-bottom: 27px;
+            font-size: 25px;
+            line-height: 36px;
+            color: #333333;
+            border: 0;
+            border-bottom: 1px solid gray;
+            padding-inline-start: 2px;
+            padding-inline-end: 2px;
+        }
+        select {
+            width: 220px;
+            background-color: #ffffff;
+            display: inline-block;
+            margin-bottom: 0;
+        }
+        option {
+            font-weight: normal;
+            display: block;
+            white-space: pre;
+            min-height: 1.2em;
+            padding: 0px 2px 1px;
+        }
+        p {
+            margin: 0 0 9px;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+            line-height: 18px;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+        label, input, button, select, textarea {
+
+            font-weight: normal;
+            line-height: 18px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333333;
+            cursor: default;
+        }
+        input{
+            display: inline-block;
+            margin-bottom: 0;
+        }
+        select, input[type="file"] {
+            height: 28px;
+            *margin-top: 4px;
+            line-height: 28px;
+        }
+        textarea {
+            height: auto;
+        }
+        .control-group{
+            margin-bottom: 18px;
+            margin-top: 18px;
+        }
+        .form-horizontal .control-label {
+            float: left;
+            width: 140px;
+            padding-top: 5px;
+            text-align: right;
+        }
+        .form-horizontal .controls {
+            margin-left: 160px;
+        }
+        .help-block {
+            display: block;
+            margin-top: 5px;
+            margin-bottom: 0;
+            color: #999999;
+        }
+        .controls > .radio:first-child, .controls > .checkbox:first-child {
+            padding-top: 5px;
+        }
+        .radio, .checkbox {
+            padding-left: 18px;
+        }
+        .radio input[type="radio"], .checkbox input[type="checkbox"] {
+            float: left;
+            margin-left: -18px;
+        }
+        .form-horizontal .control-label {
+            float: left;
+            width: 140px;
+            padding-top: 5px;
+            text-align: right;
+        }
+        .form-search input, .form-inline input, .form-horizontal input, .form-search textarea, .form-inline textarea, .form-horizontal textarea, .form-search select, .form-inline select, .form-horizontal select, .form-search .help-inline, .form-inline .help-inline, .form-horizontal .help-inline, .form-search .uneditable-input, .form-inline .uneditable-input, .form-horizontal .uneditable-input {
+            display: inline-block;
+            margin-bottom: 0;
+        }
+        select[multiple], select[size] {
+            height: auto;
+        }
+        .form-search input, .form-inline input, .form-horizontal input, .form-search textarea, .form-inline textarea, .form-horizontal textarea, .form-search select, .form-inline select, .form-horizontal select, .form-search .help-inline, .form-inline .help-inline, .form-horizontal .help-inline, .form-search .uneditable-input, .form-inline .uneditable-input, .form-horizontal .uneditable-input {
+            display: inline-block;
+            margin-bottom: 0;
+        }
+
+        .input-xlarge {
+            width: 270px;
+        }
+        .form-horizontal .form-actions {
+            padding-left: 160px;
+        }
+        .form-actions {
+            padding: 17px 20px 18px;
+            margin-top: 18px;
+            margin-bottom: 18px;
+            border-top: 1px solid #ddd;
+        }
+        .btn-primary{
+            background-color: #006dcc;
+            background-repeat: repeat-x;
+            border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+            color: #ffffff;
+        }
+        .btn {
+            display: inline-block;
+            padding: 4px 10px 4px;
+            margin-bottom: 0;
+            line-height: 18px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+<div class="section">
+    <div class="container">
+        <form class="form-horizontal">
+            <fieldset>
+                <legend>Bootstrap 支持的控件</legend>
+                <div class="control-group">
+                    <label class="control-label" for="input01">文本输入</label>
+                    <div class="controls">
+                        <input type="text" class="input-xlarge" id="input01">
+                        <p class="help-block">除了自由格式文本，一些HTML5基于文本的输入像这样呈现</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="optionsCheckbox">确认框</label>
+                    <div class="controls">
+                        <label class="checkbox">
+                            <input type="checkbox" id="optionsCheckbox" value="option1">
+                            选中该项，确认此项正确。
+                        </label>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="select01">选择列表</label>
+                    <div class="controls">
+                        <select id="select01">
+                            <option>something</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="multiSelect">多选</label>
+                    <div class="controls">
+                        <select multiple="multiple" id="multiSelect">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="fileInput">文件上传</label>
+                    <div class="controls">
+                        <input class="input-file" id="fileInput" type="file">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="textarea">文本区域</label>
+                    <div class="controls">
+                        <textarea class="input-xlarge" id="textarea" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-primary">保存修改</button>
+                    <button class="btn">取消</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+</body>
+</html>

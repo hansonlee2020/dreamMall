@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hanson.dao.SystemUserMapper">
+    <!--查询全部管理员信息-->
+    <select id="doGetSystemUsers" resultType="user">
+        select user_id,user_name,user_state
+        from dreammall.user
+    </select>
+    <!--根据管理员用户id查询管理员信息-->
+    <select id="doGetSystemUserById" parameterType="String" resultType="user">
+        select user_id,user_name,user_state
+        from dreammall.user
+        <where>
+            user_id = #{userId}
+        </where>
+    </select>
+    <!--根据用户名查询用户部分信息-->
+    <select id="doGetSystemUserByName" parameterType="String" resultType="user">
+        select user_id,user_name,user_state
+        from dreammall.user
+        <where>
+            user_name=#{userName}
+        </where>
+    </select>
+    <!--新建管理员用户-->
+    <insert id="doCreateSystemUser" parameterType="user">
+        insert into dreammall.user(user_id, user_name, user_pwd, user_state, encryption_salt)
+        VALUES (#{userId},#{userName},#{userPwd},#{userState},#{encryptionSalt})
+    </insert>
+    <!--根据管理员id修改管理员信息-->
+    <update id="doUpdateSystemUser" parameterType="user">
+        update dreammall.user
+        <set>
+            <if test="userName != null">
+                user_name = #{userName},
+            </if>
+            <if test="userPwd != null">
+                user_pwd = #{userPwd},
+            </if>
+            <if test="userState != null">
+                user_state = #{userState},
+            </if>
+            <if test="encryptionSalt != null">
+                encryption_salt = #{encryptionSalt}
+            </if>
+        </set>
+        <where>
+            user_id = #{userId}
+        </where>
+    </update>
+    <!--根据管理员id删除管理员信息-->
+    <delete id="doDeleteSystemUser" parameterType="String">
+        delete
+        from dreammall.user
+        <where>
+            user_id = #{userId}
+        </where>
+    </delete>
+    <!--统计管理员账号-->
+    <select id="doCounts" resultType="int">
+        select COUNT(*)
+        from dreammall.user;
+    </select>
+    <!--分页模糊查询显示管理员信息-->
+    <select id="doSystemUserSplit" resultType="user">
+        select user_id,user_name,user_state
+        from dreammall.user
+        <where>
+            <if test="searchKey != null">
+                and user_name like concat('%',#{searchKey},'%')
+            </if>
+        </where>
+        limit #{startIndex},#{pageSize}
+    </select>
+    <!--模糊查询管理员信息-->
+    <select id="doSearchMemberByName" parameterType="String" resultType="user">
+        select user_id,user_name,user_state
+        from dreammall.user
+        <where>
+            <if test="userName != null">
+                and user_name like concat('%',#{userName},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

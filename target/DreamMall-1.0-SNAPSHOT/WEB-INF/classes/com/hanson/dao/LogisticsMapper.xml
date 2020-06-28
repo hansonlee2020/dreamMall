@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hanson.dao.LogisticsMapper">
+    <!--查询全部物流-->
+    <select id="doGetAllLogistics" resultType="logistics">
+        select *
+        from dreammall.tb_logistics
+    </select>
+    <!--根据物流名称查询物流-->
+    <select id="doGetLogisticsByName" resultType="logistics">
+        select *
+        from dreammall.tb_logistics
+        <where>
+            logistics_name = #{name}
+        </where>
+    </select>
+    <!--根据物流id查询物流-->
+    <select id="doGetLogisticsById" resultType="logistics">
+        select *
+        from dreammall.tb_logistics
+        <where>
+            id = #{id}
+        </where>
+    </select>
+    <!--新建物流-->
+    <insert id="doCreateLogistics" parameterType="logistics">
+        insert into dreammall.tb_logistics(id, logistics_name) VALUES (#{id},#{logisticsName});
+    </insert>
+</mapper>

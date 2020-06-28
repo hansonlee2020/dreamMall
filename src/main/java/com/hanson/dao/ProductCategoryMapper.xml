@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hanson.dao.ProductCategoryMapper">
+    <sql id="search_where_if">
+        <if test="searchKey != null">
+            category_id like concat('%',#{searchKey},'%')
+            or
+            category_first_name like concat('%',#{searchKey},'%')
+            or
+            category_second_name like concat('%',#{searchKey},'%')
+            or
+            category_third_name like concat('%',#{searchKey},'%')
+        </if>
+    </sql>
+    <!--根据一级分类名称查询所有一级分类下的分类信息-->
+    <select id="doGetCategoriesByName" parameterType="String" resultType="productCategory">
+        select category_id, category_first_name, category_second_name, category_third_name
+        from category
+        where category_first_name=#{firstName}
+    </select>
+    <!--查询全部分类信息-->
+    <select id="doGetAllCategories" resultType="productCategory">
+        select category_id, category_first_name, category_second_name, category_third_name
+        from category
+    </select>
+    <!--查询所有一级分类名称-->
+    <select id="doGetCategoriesFirstName" resultType="String">
+        select distinct category_first_name
+        from category
+    </select>
+    <!--根据一级分类名称查询所有二级分类名称-->
+    <select id="doGetCategoriesSecondName" parameterType="String" resultType="String">
+        select distinct category_second_name
+        from category
+        where category_first_name=#{firstName}
+    </select>
+    <!--根据二级分类名称查询所有的三级分类名称-->
+    <select id="doGetCategoriesThirdName" parameterType="String" resultType="String">
+        select distinct category_third_name
+        from category
+        where category_second_name=#{secondName}
+    </select>
+    <!--根据三级分类名称查询所在的分类信息，主要获取所在分类的信息-->
+    <select id="doGetCategory" parameterType="String" resultType="productCategory">
+        select category_id, category_first_name, category_second_name, category_third_name
+        from category
+        where category_third_name=#{thirdName}
+    </select>
+    <!--根据分类id查询分类信息-->
+    <select id="doGetCategoryById" parameterType="int" resultType="productCategory">
+        select *
+        from dreammall.category
+        where category_id=#{categoryId};
+    </select>
+    <!--获取所有三级分类名称-->
+    <select id="doGetCategoryThirdName" resultType="String">
+        select category_third_name
+        from dreammall.category;
+    </select>
+    <!--新增分类信息-->
+    <insert id="doCreateCategory" parameterType="productCategory">
+        insert into dreammall.category(category_id, category_first_name, category_second_name, category_third_name)
+        values (#{categoryId},#{categoryFirstName},#{categorySecondName},#{categoryThirdName});
+    </insert>
+    <!--根据分类id删除分类信息-->
+    <delete id="doDeleteCategory" parameterType="int">
+        delete
+        from dreammall.category
+        <where>
+            category_id=#{categoryId}
+        </where>
+    </delete>
+    <!--修改分类信息-->
+    <update id="doUpdateCategory" parameterType="productCategory">
+        update dreammall.category
+        <set>
+            <if test="categoryFirstName != null">
+                category_first_name=#{categoryFirstName},
+            </if>
+            <if test="categorySecondName != null">
+                category_second_name=#{categorySecondName},
+            </if>
+            <if test="categoryThirdName != null">
+                category_third_name=#{categoryThirdName}
+            </if>
+        </set>
+        <where>
+            category_id=#{categoryId}
+        </where>
+    </update>
+    <!--统计分类信息数据量-->
+    <select id="doCounts" resultType="int">
+        select COUNT(*)
+        from dreammall.category;
+    </select>
+    <!--分页查询分类信息-->
+    <select id="doGetCategorySplit" resultType="productCategory">
+        select *
+        from dreammall.category
+        limit #{startIndex},#{pageSize};
+    </select>
+    <!--模糊查询分类信息-->
+    <select id="doSearchCategory" resultType="productCategory">
+        select *
+        from dreammall.category
+        <where>
+            <include refid="search_where_if"></include>
+        </where>
+    </select>
+    <!--分页模糊查询分类信息-->
+    <select id="doSearchCategorySplit" resultType="productCategory">
+        select *
+        from dreammall.category
+        <where>
+            <include refid="search_where_if"></include>
+        </where>
+        limit #{startIndex},#{pageSize}
+    </select>
+</mapper>

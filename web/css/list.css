@@ -1,0 +1,57 @@
+/*本文件是页面列表部分的css样式文件，属于公共css资源文件*/
+
+/*整体*/
+.section{
+    top: 0;
+    left: 0;
+}
+/*顶部标题*/
+.title{
+    margin-bottom: 20px;
+}
+.right-back{
+    float:right;
+    display: inline-block;
+}
+/*分页控制选择*/
+.page-control > span ,.page-control > select ,.page-control > select > option{
+    font-size: 15px;
+}
+/*数据表格start*/
+th{
+    text-align: center;
+    font-size: 12px;
+}
+td{
+    font-size: 10px;
+    height: 30px;
+    text-align: center;
+}
+td > span{
+    font-size: 12px;
+    line-height: 20px;
+    height: 30px;
+}
+td > div{
+    line-height: 20px;
+    padding-top: 20px;
+}
+td > div > a {
+    font-size: 12px;
+    text-align: center;
+    text-decoration: none;
+}
+td > div > a > span{
+    font-size: 12px;
+    text-align: center;
+}
+#product-table{
+    line-height: 30px;
+    font-size: 15px
+}
+/*数据表end*/
+/*分页*/
+.pagination > li > a > span{
+    display: unset;
+    line-height: unset;
+}

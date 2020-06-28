@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品列表</title>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!--分页插件css-->
+    <!--自定义css-->
+    <link href="../../css/my.css" rel="stylesheet">
+    <link href="../../css/productList.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/qunit-1.11.0.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--引入第三方动态插件js-->
+    <script type="text/javascript" src="../../js/other/jquery.niftymodals.js"></script>
+    <!--分页插件js-->
+    <script src="../../js/other/bootstrap-paginator.js"></script>
+    <script src="../../js/other/qunit-1.11.0.js"></script>
+    <style>
+        .md-container{
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            height: 300px;
+            z-index: 2000;
+            visibility: hidden;
+            backface-visibility: hidden;
+            transform: translateX(-50%) translateY(-50%);
+        }
+        .md-content {
+            position: relative;
+            width: 400px;
+            height: 300px;
+        }
+        .md-show {
+            visibility: visible;
+        }
+        /*遮挡层*/
+        .md-overlay {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            visibility: hidden;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            opacity: 0;
+            background: rgba(0, 0, 0, 0.5);
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+        .md-show ~ .md-overlay {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* Fade in and scale up */
+        .md-effect-1 .md-content {
+            -webkit-transform: scale(0.7);
+            -moz-transform: scale(0.7);
+            -ms-transform: scale(0.7);
+            transform: scale(0.7);
+            opacity: 0;
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+        .md-show.md-effect-1 .md-content {
+            -webkit-transform: scale(1);
+            -moz-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+            opacity: 1;
+        }
+        /*动画*/
+        @keyframes rotateRightSideFirst {
+            50% {
+                transform: translateZ(-50px) rotateY(5deg);
+                animation-timing-function: ease-out;
+            }
+            100% {
+                transform: translateZ(-200px);
+            }
+        }
+        #window-close{
+            float: right;
+            border-radius: 1000px;
+            outline: none;
+            border: 0 solid;
+            width: 30px;
+            height: 30px;
+            font-size: 12px;
+        }
+        .context{
+            border: 1px solid grey;
+            border-radius: 15px;
+        }
+        .close-btn{
+            height: 30px;
+            padding-top: 30px;
+        }
+        .header-box{
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            background-color: palegreen;
+        }
+        #header{
+            height: 50px;
+            line-height: 50px;
+            font-size: 25px;
+            display: block;
+        }
+        .msg-box{
+            background-color: whitesmoke;
+        }
+        #msg{
+            font-size: 20px;
+            padding: 0 30px;
+            line-height: 30px;
+        }
+        .confirm-btn{
+            background-color: whitesmoke;
+            height: 40px;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px
+        }
+        #confirm{
+            margin-right: 50px;
+            outline: none;
+            border: 0 solid;
+            height: 30px;
+            font-size: 16px;
+            width: 40px;
+            height: 25px;
+            margin-left: 320px;
+            border-radius: 3px;
+            color: black;
+        }
+        .test{
+            color: #5cff7c;
+            color: #35ff3a;
+            color: red;
+        }
+    </style>
+    <script>
+        let str = "edit-1234";
+        alert(str.substring(5));
+    </script>
+</head>
+<body>
+<!--右侧内容展示栏-->
+
+<button type="button" class="btn btn-primary md-trigger" id="order" data-modal="message-window">保存修改</button>
+<a href="test4.html">ddd</a>
+<input type="button" class="btn-link" value="跳转">
+<!--弹框消息-->
+<div class="md-container md-effect-1 message-box" id="message-window">
+    <div class="md-content">
+        <div class="close-btn">
+            <input type="button" href="test4.html" id="window-close" class="md-close" value="x" onmouseover="changeBtn(this)" onmouseout="initBtn(this)">
+        </div>
+        <div class="context">
+            <div class="message">
+                <div class="header-box"><span id="header">系统消息</span></div>
+                <div class="msg-box">
+                    <span id="msg">这是一条未知消息~这是一条未知消息~这是一条未知消息~这是一条未知息~这是一条未知消息~这是一条未知消息~这是一条未知消息~这是一条未知消息~这是一条未知消息~这是一条未知消息~这是一条未知消息~这是一条未知消息~</span>
+                </div>
+                <div class="confirm-btn">
+                    <input type="button" id="confirm" class="put" value="确认" onmouseover="changeBtn(this)" onmouseout="initBtn(this)">
+                </div>
+                <input type="hidden" value="" id="id">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="md-overlay"></div>
+<!-- 以下负责处理分页查询商品业务-->
+<script>
+    $(document).ready(function() {
+        $('.md-trigger').on('click',function(){
+            let modal = $(this).data('modal');
+            $("#" + modal).niftyModal();
+        });
+    });
+</script>
+<script>
+    function changeBtn(obj) {
+        obj.style.backgroundColor = "#c9ffd1";
+    }
+    function initBtn(obj) {
+        obj.style.backgroundColor = "";
+    }
+</script>
+
+</body>
+</html>

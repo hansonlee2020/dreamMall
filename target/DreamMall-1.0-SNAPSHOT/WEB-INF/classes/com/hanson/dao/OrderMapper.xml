@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hanson.dao.OrderMapper">
+    <sql id="insert-key">
+        (
+        <if test="orderId != null">
+            order_id,
+        </if>
+        <if test="userId != null">
+            user_id,
+        </if>
+        <if test="logisticsId != null">
+            logistics_id,
+        </if>
+        <if test="notes != null">
+            notes,
+        </if>
+        <if test="paymentAmount != null">
+            payment_amount,
+        </if>
+        <if test="createTime != null">
+            create_time,
+        </if>
+        <if test="payTime != null">
+            pay_time,
+        </if>
+        <if test="closeTime != null">
+            close_time,
+        </if>
+        <if test="finishTime != null">
+            finish_time,
+        </if>
+        <if test="orderState != null">
+            order_state
+        </if>
+            )
+    </sql>
+    <sql id="insert-value">
+        (
+        <if test="orderId != null">
+            #{orderId},
+        </if>
+        <if test="userId != null">
+            #{userId},
+        </if>
+        <if test="logisticsId != null">
+            #{logisticsId},
+        </if>
+        <if test="notes != null">
+            #{notes},
+        </if>
+        <if test="paymentAmount != null">
+            #{paymentAmount},
+        </if>
+        <if test="createTime != null">
+            #{createTime},
+        </if>
+        <if test="payTime != null">
+            #{payTime},
+        </if>
+        <if test="closeTime != null">
+            #{closeTime},
+        </if>
+        <if test="finishTime != null">
+            #{finishTime},
+        </if>
+        <if test="orderState != null">
+            #{orderState}
+        </if>
+        )
+    </sql>
+    <sql id="where-if">
+        <if test="ids.size() > 0">
+            order_id in
+            <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </if>
+    </sql>
+    <!--查询全部订单-->
+    <select id="doGetOrders" resultType="order">
+        select *
+        from dreammall.tb_order;
+    </select>
+    <!--根据订单id查询订单-->
+    <select id="doGetOrderById" parameterType="String" resultType="order">
+        select *
+        from dreammall.tb_order
+        <where>
+            order_id=#{orderId}
+        </where>
+    </select>
+    <!--根据用户id查询订单-->
+    <select id="doGetOrderByUid" parameterType="String" resultType="order">
+        select *
+        from dreammall.tb_order
+        <where>
+            user_id = #{userId}
+        </where>
+    </select>
+    <!--分页模糊查询订单，模糊查询列为订单id-->
+    <select id="doGetOrderSplit" resultType="order">
+        select *
+        from dreammall.tb_order
+        <where>
+            order_state != 5
+            <if test="searchKey != null">
+                and order_id like concat('%',#{searchKey},'%')
+            </if>
+        </where>
+        limit #{startIndex},#{pageSize}
+    </select>
+    <!--模糊查询订单，模糊查询列为订单id-->
+    <select id="doSearchOrder" parameterType="String" resultType="order">
+        select *
+        from dreammall.tb_order
+        <where>
+            order_state != 5
+            <if test="searchKey != null">
+                and order_id like concat('%',#{searchKey},'%')
+            </if>
+        </where>
+    </select>
+    <!--创建订单-->
+    <insert id="doCreateOrder" parameterType="order">
+        insert into dreammall.tb_order
+        <include refid="insert-key"></include>
+        values
+        <include refid="insert-value"></include>
+    </insert>
+    <!--根据订单id修改订单状态-->
+    <update id="doUpdateOrder">
+        update dreammall.tb_order
+        <set>
+            order_state = #{orderState}
+        </set>
+        <where>
+            order_id = #{orderId}
+        </where>
+    </update>
+    <!--根据批量恢复订单-->
+    <update id="doBatchUpdateOrder">
+        update dreammall.tb_order
+        <set>
+            order_state = 4
+        </set>
+        <where>
+            <include refid="where-if"></include>
+        </where>
+    </update>
+    <!--根据订单id修改订单备注-->
+    <update id="doUpdateOrderNotes">
+        update dreammall.tb_order
+        <set>
+            notes = #{notes}
+        </set>
+        <where>
+            order_id = #{orderId}
+        </where>
+    </update>
+    <!--根据订单id批量删除订单-->
+    <delete id="doBatchDeleteOrder">
+        delete
+        from dreammall.tb_order
+        <where>
+            <include refid="where-if"></include>
+        </where>
+    </delete>
+    <!--分页模糊查询回收站订单信息，模糊查询列为订单id-->
+    <select id="doGetOrderSplitTrash" resultType="order">
+        select *
+        from dreammall.tb_order
+        <where>
+            order_state = 5
+            <if test="searchKey != null">
+                and order_id like concat('%',#{searchKey},'%')
+            </if>
+        </where>
+        limit #{startIndex},#{pageSize}
+    </select>
+    <!--模糊查询取消回收订单信息，模糊查询列为订单id-->
+    <select id="doSearchOrderTrash" resultType="order">
+        select *
+        from dreammall.tb_order
+        <where>
+            order_state = 5
+            <if test="searchKey != null">
+                and order_id like concat('%',#{searchKey},'%')
+            </if>
+        </where>
+    </select>
+    <!--根据订单id查询订单部分信息-->
+    <select id="doGetOrderInfoByoid" parameterType="String" resultType="order">
+        select order_id,user_id,notes
+        from dreammall.tb_order
+        <where>
+            order_id = #{orderId}
+        </where>
+    </select>
+    <!--根据订单id更新物流号-->
+    <update id="doUpdateOrderLogistics" parameterType="String">
+        update dreammall.tb_order
+        <set>
+            logistics_id = #{logisticsId}
+        </set>
+        <where>
+            order_id =#{orderId}
+        </where>
+    </update>
+    <!--初始化订单表-->
+    <delete id="doInitOrder">
+        delete
+        from dreammall.tb_order
+        where user_id != 'person';
+    </delete>
+</mapper>

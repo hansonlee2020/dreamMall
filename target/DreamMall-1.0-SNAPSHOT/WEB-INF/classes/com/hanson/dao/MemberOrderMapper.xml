@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hanson.dao.MemberOrderMapper">
+    <!--获取全部订单-->
+    <select id="doGetMemberOrders" resultType="memberOrder">
+        select *
+        from dreammall.tb_member_order;
+    </select>
+    <!--根据订单id查询用户订单信息-->
+    <select id="doGetMemberOrderByoid" resultType="memberOrder">
+        select *
+        from dreammall.tb_member_order
+        <where>
+            order_id = #{orderId}
+        </where>
+    </select>
+    <!--根据用户id查询用户订单信息-->
+    <select id="doGetMemberOrderByuid" resultType="memberOrder">
+        select *
+        from dreammall.tb_member_order
+        <where>
+            user_id = #{userId}
+        </where>
+    </select>
+    <!--新增用户订单-->
+    <insert id="doCreateMemberOrder" parameterType="memberOrder">
+        insert into dreammall.tb_member_order(order_id, user_id, product_id, quantity)
+        VALUES (#{orderId},#{userId},#{productId},#{quantity});
+    </insert>
+    <!--初始化用户订单-->
+    <delete id="doInitMemberOrder">
+        delete
+        from dreammall.tb_member_order
+        where user_id != 'person';
+    </delete>
+</mapper>

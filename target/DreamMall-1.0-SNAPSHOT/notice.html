@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>通知消息（用于测试，不可正常使用）</title>
+    <%--bootstrap--%>
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <%--引入自定义样式--%>
+    <link href="/css/my.css" rel="stylesheet" type="text/css">
+    <link href="/css/index.css" rel="stylesheet" type="text/css">
+    <link href="/css/addProduct.css" rel="stylesheet" type="text/css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script type="text/javascript" src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script type="text/javascript" src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--引入第三方动态插件js-->
+    <script type="text/javascript" src="/js/other/jquery.niftymodals.js"></script>
+    <!--引入add.js文件-->
+
+</head>
+<body>
+<!--弹框消息-->
+<div class="md-container md-effect-1 message-box" id="message-window">
+    <div class="md-content">
+        <div class="bottom-btn">
+            <input type="button" id="window-close" class="md-close" value="x" onmouseover="changeBtn(this)" onmouseout="initBtn(this)">
+        </div>
+        <div class="context">
+            <div class="message">
+                <div class="header-box"><span id="header">系统消息</span></div>
+                <div class="msg-box"><span id="msg" style="word-break: break-word">这是一条未知消息~</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="md-overlay"></div>
+<!-- 以下负责处理业务-->
+<script>
+    $(document).ready(function() {
+        $('.md-trigger').on('click',function(){
+            let modal = $(this).data('modal');
+            $("#" + modal).niftyModal();
+        });
+    });
+</script>
+<script>
+    function changeBtn(obj) {
+        obj.style.backgroundColor = "#c9ffd1";
+    }
+    function initBtn(obj) {
+        obj.style.backgroundColor = "";
+    }
+</script>
+</body>
+</html>

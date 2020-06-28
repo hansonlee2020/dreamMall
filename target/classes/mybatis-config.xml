@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!--标准日志实现-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!--开启驼峰命名自动映射，即从经典数据库列名 A_COLUMN 映射到经典 Java 属性名 aColumn-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--全局性地开启或关闭所有映射器配置文件中已配置的任何缓存。-->
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+    <!--扫描pojo包下的所有实体类并设置别名-->
+    <typeAliases>
+        <package name="com.hanson.pojo"/>
+    </typeAliases>
+    <!--数据源交由spring去做-->
+    <!--注册dao包下的所有mapper,mapper.xml文件都交由spring去做动态注册管理了-->
+</configuration>
