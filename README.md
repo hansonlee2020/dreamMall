@@ -18,8 +18,8 @@
 ### 项目功能模块
 
 <img src="https://s1.ax1x.com/2020/06/29/NWCjTH.png" alt="image 20200629015658849" border="0">
-### 技术介绍
 
+### 技术介绍
 #### 1、前端使用的技术
 
 - [Bootstrap](https://www.bootcss.com/)：是对html、css和JavaScript进行了轻量级包装的优秀的前端开发框架
