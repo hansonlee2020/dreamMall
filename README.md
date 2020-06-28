@@ -18,7 +18,7 @@
 项目功能模块
 
 ![image-20200629015658849](README.assets/image-20200629015658849.png)
-<img src="README.assets/image-20200629015658849.png">
+<img src="README.assets/image-20200629015658849.png"/>
 ### 技术介绍
 
 #### 1、前端使用的技术
