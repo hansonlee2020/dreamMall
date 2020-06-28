@@ -5,5 +5,6 @@
 *.ipr
 *.iws
 out/
+README.md
 #Junit
 src/test/
